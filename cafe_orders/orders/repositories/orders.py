@@ -14,17 +14,18 @@ class OrdersRepositoryProtocol(Protocol):
     def get(self, order_id: int):
         ...
 
-    def get_by_id_table(self, table_id: int):
+    def get_by_id_table(self, table_id: int | None, status: str | None) -> OrderDTO:
         ...
 
     def get_list(self):
         ...
 
-    def update(self,order_id: int, update_objects: OrderUpdateDTO):
+    def update(self, order_id: int, update_objects: OrderUpdateDTO):
         ...
 
     def delete(self, delete_objects: int):
         ...
+
 
 class OrdersRepositoryImpl:
     def __init__(self):
@@ -32,21 +33,27 @@ class OrdersRepositoryImpl:
 
     def add(self, create_objects: OrderDTO):
         order = self.model.objects.create(table_number=create_objects.table_number,
-                                            items=create_objects.items,
-                                            status=create_objects.status,
-                                            total_price=create_objects.total_price)
+                                          items=create_objects.items,
+                                          status=create_objects.status,
+                                          total_price=create_objects.total_price)
         return order
 
     def get(self, order_id: int):
         return self.model.objects.get(id=order_id)
 
-    def get_by_id_table(self, table_id: int):
-        return
+    def get_by_id_table(self, table_id=None, status=None) -> OrderDTO:
+        if table_id and status:
+            return self.model.objects.filter(table_number=table_id, status=status)
+        if table_id is not None:
+            return self.model.objects.filter(table_number=table_id)
+        if status:
+            return self.model.objects.filter(status=status)
 
     def get_list(self):
         return list(self.model.objects.all())
 
-    def update(self,order_id:int, update_objects: OrderUpdateDTO):
+    @transaction.atomic
+    def update(self, order_id: int, update_objects: OrderUpdateDTO):
         order = self.model.objects.get(pk=order_id)
         order.items = update_objects.items
         order.status = update_objects.status
@@ -57,8 +64,7 @@ class OrdersRepositoryImpl:
         order.save()
         return order
 
+    @transaction.atomic
     def delete(self, delete_objects: int):
-        self.model.objects.filter(pk=delete_objects).delete()
-
-
-
+        order = self.model.objects.get(id=delete_objects)
+        order.delete()

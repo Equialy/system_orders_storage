@@ -1,0 +1,25 @@
+[
+    {"name": "Салат Цезарь", "price": 800, "quantity": 1},
+    {"name": "Карбонара", "price": 1100, "quantity": 2},
+    {"name": "Тирамису", "price": 600, "quantity": 1}
+],
+[
+    {"name": "Бургер с беконом", "price": 1300, "quantity": 1},
+    {"name": "Картофель фри", "price": 400, "quantity": 2},
+    {"name": "Кола", "price": 200, "quantity": 3}
+],
+[
+    {"name": "Суши-сет", "price": 1800, "quantity": 1},
+    {"name": "Роллы с лососем", "price": 1200, "quantity": 2},
+    {"name": "Мисо суп", "price": 300, "quantity": 1}
+],
+[
+    {"name": "Пицца Маргарита", "price": 900, "quantity": 1},
+    {"name": "Пицца Пепперони", "price": 1100, "quantity": 1},
+    {"name": "Салат Греческий", "price": 700, "quantity": 1}
+],
+[
+    {"name": "Стейк Рибай", "price": 2500, "quantity": 1},
+    {"name": "Креветки в кляре", "price": 1400, "quantity": 1},
+    {"name": "Шоколадный мусс", "price": 500, "quantity": 1}
+]

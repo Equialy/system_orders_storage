@@ -1,23 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <form action="{% url 'orders:order_search' %}" method="get" class="form-inline mb-4">
-    <div class="form-group mr-2">
-      <label for="table_number" class="mr-2">Номер стола:</label>
-      <input type="number" class="form-control" id="table_number" name="table_number" placeholder="Введите номер стола">
-    </div>
-    <div class="form-group mr-2">
-      <label for="status" class="mr-2">Статус:</label>
-      <select class="form-control" id="status" name="status">
-        <option value="">Все</option>
-        <option value="В ожидании">В ожидании</option>
-        <option value="Готово">Готово</option>
-        <option value="Оплачено">Оплачено</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Поиск</button>
-  </form>
-
 <h1>Orders</h1>
 <table class="table table-striped">
     <thead>
@@ -45,10 +28,10 @@
             <td>₽{{ order.total_price }}</td>
             <td>{{ order.get_status_display }}</td>
             <td>
-                <a href="{% url 'orders:order_update' order.id %}" class="btn btn-primary">Изменить</a>
+                <a href="{% url 'orders:order_update' order.id %}" class="btn btn-primary">Edit</a>
                 <form action="{% url 'orders:order_delete' order.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Удалить</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
         </tr>

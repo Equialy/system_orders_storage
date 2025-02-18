@@ -1,18 +1,34 @@
 class OrderNotFound(Exception):
-    """Исключение, выбрасываемое, когда заказ не найден."""
-    pass
+    def __init__(self):
+        self.message = "Заказ не найден"
+        super().__init__(self.message)
+
+    def __str__(self):
+        return self.message
+
 
 class InvalidOrderData(Exception):
-    def __init__(self, message:str):
-        """Исключение для некорректных данных заказа."""
-        self.message = message
+    def __init__(self):
+        self.message = "Заказ должен содержать хотя бы одно блюдо"
+        super().__init__(self.message)
 
-class DishNotFound(Exception):
-    """Исключение, выбрасываемое, когда блюдо не найдено."""
-    pass
+    def __str__(self):
+        return self.message
 
 
-class InvalidOrderDishes(Exception):
-    def __init__(self, message:str):
-        """Исключение для некорректных данных заказа."""
-        self.message = message
+class InvalidOrderTableData(Exception):
+    def __init__(self):
+        self.message = "Номер стола должен быть больше нуля"
+        super().__init__(self.message)
+
+    def __str__(self):
+        return self.message
+
+class InvalidOrderItemsData(Exception):
+    def __init__(self):
+        self.message = "Введенные данные заказа некорректны"
+        super().__init__(self.message)
+
+    def __str__(self):
+        return self.message
+

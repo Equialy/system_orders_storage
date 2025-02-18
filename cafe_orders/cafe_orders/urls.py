@@ -17,10 +17,15 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+from api.orders_api import urls
 from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('orders.urls')),
+    path('api/', include("api.orders_api.urls")),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

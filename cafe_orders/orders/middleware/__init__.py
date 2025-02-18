@@ -1,0 +1,2 @@
+from orders.middleware.exception_middleware import CustomExceptionMiddleware as CustomExceptionMiddleware
+

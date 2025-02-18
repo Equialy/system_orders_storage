@@ -3,12 +3,12 @@
 {% block content %}
 <div class="container mt-5">
   <h1 class="mb-4">Создать заказ</h1>
-  <form id="orderForm" action="{% url 'order_create' %}" method="post" onsubmit="return collectItems()">
+  <form id="orderForm" action="{% url 'orders:order_create' %}" method="post" onsubmit="return collectItems()">
     {% csrf_token %}
     <!-- Номер стола -->
     <div class="form-group">
       <label for="table_number">Номер стола</label>
-      <input type="number" class="form-control" id="table_number" name="table_number" placeholder="Введите номер стола" required>
+      <input type="number" class="form-control" id="table_number" name="table_number" placeholder="Введите номер стола" required min="1">
     </div>
 
     <!-- Блюда -->
@@ -22,11 +22,11 @@
           </div>
           <div class="form-group">
             <label>Цена</label>
-            <input type="number" step="0.01" class="form-control" name="price" placeholder="Цена" required>
+            <input type="number" step="0.01"  class="form-control" name="price" placeholder="Цена" max="999999.99" required min="0.01">
           </div>
           <div class="form-group">
             <label>Количество</label>
-            <input type="number" class="form-control" name="quantity" placeholder="Количество" required>
+            <input type="number" class="form-control" name="quantity" placeholder="Количество" required min="1" max="100">
           </div>
           <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить блюдо</button>
         </div>
@@ -34,10 +34,8 @@
       <button type="button" class="btn btn-secondary mt-2" onclick="addItem()">Добавить блюдо</button>
     </div>
 
-    <!-- Скрытое поле для передачи списка блюд в виде JSON -->
     <input type="hidden" id="items" name="items">
 
-    <!-- Статус заказа -->
     <div class="form-group">
       <label for="status">Статус заказа</label>
       <select class="form-control" id="status" name="status">
@@ -51,7 +49,6 @@
   </form>
 </div>
 
-<!-- Скрипт для динамического добавления блюд и сбора данных в JSON -->
 <script>
   function addItem() {
     const container = document.getElementById('itemsContainer');

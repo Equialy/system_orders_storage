@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Редактирование заказа #{{ order.id }}</h2>
 
-<form id="orderUpdateForm" method="post" action="{% url 'order_update' order.id %}" onsubmit="return collectUpdateItems()">
+<form id="orderUpdateForm" method="post" action="{% url 'orders:order_update' order.id %}" onsubmit="return collectUpdateItems()">
     {% csrf_token %}
 
     <h4>Текущие блюда:</h4>
@@ -36,7 +36,7 @@
                 <input type="text" class="form-control" name="new_name" placeholder="Название">
             </div>
             <div class="col">
-                <input type="number" step="0.01" class="form-control" name="new_price" placeholder="Цена">
+                <input type="number" step="0.01" class="form-control" min="0.01" max="999999.99" name="new_price" placeholder="Цена">
             </div>
             <div class="col">
                 <input type="number" class="form-control" name="new_quantity" placeholder="Количество">
@@ -49,12 +49,12 @@
     <input type="hidden" id="items" name="items">
 
     <div class="form-group">
-        <label for="status">Статус заказа</label>
-        <select class="form-control" id="status" name="status">
-            <option value="В ожидании" {% if order.status == 'В ожидании' %}selected{% endif %}>В ожидании</option>
-            <option value="Готово" {% if order.status == 'Готово' %}selected{% endif %}>Готово</option>
-            <option value="Оплачено" {% if order.status == 'Оплачено' %}selected{% endif %}>Оплачено</option>
-        </select>
+      <label for="status">Статус заказа</label>
+      <select class="form-control" id="status" name="status">
+        <option value="В ожидании">В ожидании</option>
+        <option value="Готово">Готово</option>
+        <option value="Оплачено">Оплачено</option>
+      </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Сохранить изменения</button>
