@@ -42,7 +42,7 @@ class OrdersServiceImpl:
         return sum(item["price"] * item["quantity"] for item in order_dto.items)
 
     def create_order(self, order_dto: OrderDTO) -> OrderDTO:
-        if order_dto.table_number < 1:
+        if int(order_dto.table_number) < 1:
             raise InvalidOrderTableData()
         for item in order_dto.items:
             if item["price"] < 0:
@@ -56,9 +56,8 @@ class OrdersServiceImpl:
     def get_order(self, order_id: int) -> OrderDTO:
         return self.orders_repository_factory.get(order_id=order_id)
 
-    def get_by_table(self, table_number: str | None, status: str | None) -> OrderDTO:
-        if len(table_number) == 0:
-            table_number = None
+    def get_by_table(self, table_number: int | None, status: str | None) -> OrderDTO:
+        table_number = int(table_number) if table_number.isdigit() else None
         return self.orders_repository_factory.get_by_id_table(table_id=table_number, status=status)
 
     def list_orders(self) -> OrderDTO:

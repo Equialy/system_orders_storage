@@ -1,4 +1,5 @@
 ### Ситема управления заказами
+REST API для управления заказами в ресторане. Проект реализован на Django с использованием DRF (Django REST Framework).
 
 ## Установка
 
@@ -30,10 +31,28 @@ pip install -r requirements.txt
 ```
 3. Применение миграций базы данных:
 ```
-alembic upgrade head
+python manage.py migrate
 ```
 4. Запуск сервера:
 ```
-uvicorn src.main:app --reload
+python manage.py runserver
 ```
 
+## API для приложения
+
+```http://127.0.0.1:8000/api/docs/```
+
+## Примеры заказов
+
+POST /api/orders/create
+Content-Type: application/json
+```
+{
+    "table_number": "5",
+    "items": [
+        {"name": "Стейк Рибай", "price": 2500, "quantity": 1},
+        {"name": "Красное вино", "price": 900, "quantity": 2}
+    ],
+    "status": "В ожидании"
+}
+```

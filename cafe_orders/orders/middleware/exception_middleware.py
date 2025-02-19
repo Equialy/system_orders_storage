@@ -17,7 +17,7 @@ class CustomExceptionMiddleware:
         elif isinstance(exception, OrderNotFound):
             return HttpResponseNotFound(str(exception))
         elif isinstance(exception, InvalidOrderTableData):
-            return HttpResponseNotFound(str(exception))
+            return HttpResponseBadRequest(str(exception))
         elif isinstance(exception, InvalidOrderItemsData):
             return HttpResponseNotFound(str(exception))
 
