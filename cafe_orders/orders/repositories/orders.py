@@ -28,10 +28,13 @@ class OrdersRepositoryProtocol(Protocol):
 
 
 class OrdersRepositoryImpl:
+    """ Реализация репозитория для работы с заказами """
+
     def __init__(self):
         self.model = Orders
 
     def add(self, create_objects: OrderDTO):
+        """ Добавляет новый заказ в базу данных """
         order = self.model.objects.create(table_number=create_objects.table_number,
                                           items=create_objects.items,
                                           status=create_objects.status,
@@ -39,9 +42,12 @@ class OrdersRepositoryImpl:
         return order
 
     def get(self, order_id: int):
+        """ Возвращает заказ по его ID """
         return self.model.objects.get(id=order_id)
 
     def get_by_id_table(self, table_id=None, status=None) -> OrderDTO:
+        """ Возвращает заказы по номеру стола и/или статусу
+        return: QuerySet[Orders]: Список заказов, соответствующих критериям"""
         if table_id and status:
             return self.model.objects.filter(table_number=table_id, status=status)
         if table_id is not None:
@@ -50,10 +56,12 @@ class OrdersRepositoryImpl:
             return self.model.objects.filter(status=status)
 
     def get_list(self):
+        """ Возвращает список всех заказов """
         return list(self.model.objects.all())
 
     @transaction.atomic
     def update(self, order_id: int, update_objects: OrderUpdateDTO):
+        """ Обновляет существующий заказ """
         order = self.model.objects.get(pk=order_id)
         order.items = update_objects.items
         order.status = update_objects.status
@@ -66,5 +74,6 @@ class OrdersRepositoryImpl:
 
     @transaction.atomic
     def delete(self, delete_objects: int):
+        """ Удаляет заказ по его ID """
         order = self.model.objects.get(id=delete_objects)
         order.delete()
